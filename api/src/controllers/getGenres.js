@@ -6,25 +6,28 @@ const getGenres = async (req, res) => {
   try {
     const response = await getGenreService();
 
-    for (let i = 0; i < response.length; i++) {
-      const id = response[i].id;
-      const name = response[i].slug;
+    let id = response.map((obj) => obj.id);
+    const name = response.map((obj) => obj.name).toString();
 
-      const [genre, created] = await GameGenre.findOrCreate({
-        where: { id: id },
-        defaults: {
-          id,
-          name,
-        },
+    console.log(response);
+    console.log(id);
+    console.log(name);
+
+    const [genre, created] = await GameGenre.findOrCreate({
+      where: {
+        id: id,
+      },
+      defaults: {
+        name: name,
+      },
+    });
+
+    if (!created) {
+      return res.status(400).json({
+        message:
+          "A genre with this ID already exists. Please use a different ID.",
       });
-      if (!created) {
-        return res.status(400).json({
-          message:
-            "A genre with this ID already exists. Please use a different ID.",
-        });
-      }
     }
-
     return res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });

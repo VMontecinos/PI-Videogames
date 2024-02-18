@@ -41,13 +41,21 @@ const getVideogames = async (req, res) => {
 const getGameById = async (req, res) => {
   const { id } = req.params;
 
+  if (isNaN(Number(id))) {
+    return res
+      .status(400)
+      .json({ message: "Invalid ID. ID must be a number." });
+  }
+
   if (!isNaN(Number(id))) {
     try {
       const response = await gameIdService(id);
 
       return res.status(200).json(response);
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      res
+        .status(404)
+        .json("There are no games with this ID. Please try again.");
     }
   } else {
     const findGame = await Videogame.findOne({

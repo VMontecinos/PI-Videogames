@@ -17,28 +17,36 @@ const getVideogamesService = async () => {
 const getGameByIdService = async (id) => {
   const URL = `https://api.rawg.io/api/games/${id}?key=${myProcess.API_KEY}`;
 
-  const promise = await axios(URL);
+  try {
+    const response = await axios.get(URL);
+    const { data } = response;
 
-  const {
-    data,
-    data: { name, description, platforms, image, releaseDate, rating },
-  } = promise;
+    if (!data.id) {
+      throw new Error("No games match that ID. Please try again!");
+    }
 
-  if (!data.id) {
-    throw new Error("No games match that ID. Please try again!");
+    let { name, description, platforms, background_image, released, ratings } =
+      data;
+
+    if (background_image === null) {
+      background_image =
+        "https://www.pngitem.com/pimgs/m/17-175435_console-png-free-image-console-png-transparent-png.png";
+    }
+
+    const game = {
+      id,
+      name,
+      description,
+      platforms,
+      background_image,
+      released,
+      ratings,
+    };
+
+    return game;
+  } catch (error) {
+    throw error;
   }
-
-  const game = {
-    id,
-    name,
-    description,
-    platforms,
-    image,
-    releaseDate,
-    rating,
-  };
-
-  return game;
 };
 
 const getGamesByNameService = async (search) => {
