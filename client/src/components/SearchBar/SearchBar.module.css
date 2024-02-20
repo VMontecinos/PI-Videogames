@@ -23,13 +23,9 @@
   transition: all 0.3s;
 }
 
-.SearchBar:focus {
-  outline: none;
-  background-color: rgb(248, 248, 248);
-  color: var(--dark-text);
-}
-
+.SearchBar:focus,
 .SearchBar:hover {
+  outline: none;
   background-color: rgb(248, 248, 248);
   color: var(--dark-text);
 }
@@ -37,4 +33,10 @@
 i {
   position: absolute;
   right: 21%;
+  transition: all 0.3s;
+}
+
+.SearchBar:hover + i,
+.SearchBar:focus + i {
+  color: var(--dark-text);
 }

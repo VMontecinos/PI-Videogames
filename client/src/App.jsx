@@ -1,6 +1,5 @@
 import "./App.css";
 import { Cards } from "./components/Cards/Cards.jsx";
-import { Title } from "./components/Title/title.jsx";
 import { Nav } from "./components/Nav/Nav.jsx";
 import { useState } from "react";
 import axios from "axios";

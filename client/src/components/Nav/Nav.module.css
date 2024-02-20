@@ -1,0 +1,6 @@
+.navContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(150%);
+}

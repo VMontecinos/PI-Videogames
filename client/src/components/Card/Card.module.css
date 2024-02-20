@@ -2,11 +2,12 @@
 
 .card {
   display: flex;
+  position: relative;
   flex-direction: column;
-  margin-left: 10px;
-  margin-top: 85px;
+  margin: 250px 10px 100px 10px;
   height: 400px;
   width: 360px;
+  transform: scale(1);
   overflow: hidden;
   background-color: rgba(65, 65, 65, 0.2);
   border: 1px rgba(100, 100, 100, 0.3) solid;
@@ -14,24 +15,37 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: all 0.3s;
+}
+
+.card_hovered {
+  transform: scale(1.01);
+  height: 500px;
+  margin-bottom: 0;
 }
 
 .card_image {
-  position: inherit;
   height: 200px;
   width: 100%;
   object-fit: cover;
 }
 
 .card_title {
-  text-align: left;
-  margin-left: 10px;
+  text-align: center;
+  transform: translateY(5vh);
+  margin-bottom: 0;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.card_title_hover {
+  color: var(--text-shade);
+  transform: translateY(0);
 }
 
 .card_description {
-  text-align: left;
   margin-left: 10px;
-  max-height: 60px;
+  max-height: 145px;
   overflow: hidden;
   transition: all 0.5s;
 }
@@ -39,7 +53,6 @@
 hr {
   width: 90%;
   border: 1px solid var(--accent);
-  margin-left: 10px;
 }
 
 .card_container_buttons {
@@ -67,4 +80,12 @@ hr {
 .secondary_button:hover {
   background-color: var(--secondary-shade);
   transform: scale(1.1);
+}
+
+.showGameInfo {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
