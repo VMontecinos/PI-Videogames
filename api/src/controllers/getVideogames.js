@@ -1,75 +1,33 @@
 require("dotenv").config();
-const {
-  gameService,
-  gameIdService,
-  gameNameService,
-} = require("../service/getVideogames");
+const { gameService, gameIdService } = require("../service/getVideogames");
 const { Videogame } = require("../db");
 
 const getVideogames = async (req, res) => {
   const { search } = req.query;
-
-  if (!search) {
-    try {
-      const response = await gameService();
-      return res.status(200).json(response);
-    } catch (error) {
-      res.status(404).json({ message: error.message });
-    }
-  } else {
-    if (!search || typeof search !== "string") {
-      return res.status(400).send("You must provide a valid search term!");
-    }
-
-    try {
-      const apiFind = await gameNameService(search);
-      const dbFind = await Videogame.findOne({
-        where: {
-          slug: search,
-        },
-      });
-
-      const response = { apiFind, dbFind };
-
-      return res.status(200).json(response);
-    } catch (error) {
-      res.status(404).json({ message: error.message });
-    }
-  }
-};
-
-const getGameById = async (req, res) => {
   const { id } = req.params;
 
-  if (isNaN(Number(id))) {
-    return res
-      .status(400)
-      .json({ message: "Invalid ID. ID must be a number." });
-  }
-
-  if (!isNaN(Number(id))) {
+  if (id) {
     try {
       const response = await gameIdService(id);
-
-      return res.status(200).json(response);
+      res.status(200).json(response);
     } catch (error) {
-      res
-        .status(404)
-        .json("There are no games with this ID. Please try again.");
+      console.log(error);
+    }
+  } else if (search) {
+    try {
+      const response = await gameService(search);
+      res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
     }
   } else {
-    const findGame = await Videogame.findOne({
-      where: {
-        id: id,
-      },
-    });
-    if (!findGame) {
-      return res
-        .status(404)
-        .json({ message: "There are no games with this ID." });
+    try {
+      const games = await gameService();
+      res.status(200).json(games);
+    } catch (err) {
+      console.log(err);
     }
-    return res.status(200).json(findGame);
   }
 };
 
-module.exports = { getVideogames, getGameById };
+module.exports = { getVideogames };

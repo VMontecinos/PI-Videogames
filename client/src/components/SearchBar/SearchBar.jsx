@@ -2,32 +2,18 @@ import { useState } from "react";
 import style from "./SearchBar.module.css";
 
 export const SearchBar = ({ onSearch }) => {
-  const handleHover = () => {
-    const magnifyingGlass = document.querySelector(
-      `.${styles.magnifyingGlass}`
-    );
-    magnifyingGlass.classList.add(styles.magnifyingGlassHovered);
-  };
-
-  const handleLeave = () => {
-    const magnifyingGlass = document.querySelector(
-      `.${styles.magnifyingGlass}`
-    );
-    magnifyingGlass.classList.remove(styles.magnifyingGlassHovered);
-  };
-
-  const [state, setState] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e) => {
     const { value } = e.target;
 
-    setState(value);
+    setSearchTerm(value);
   };
 
   const handleClick = () => {
-    onSearch(state);
+    onSearch(searchTerm);
 
-    setState("");
+    setSearchTerm("");
   };
 
   const handleKeyDown = (event) => {
@@ -36,7 +22,7 @@ export const SearchBar = ({ onSearch }) => {
     }
 
     if (event.key === "Escape") {
-      setState("");
+      setSearchTerm("");
     }
   };
 
@@ -44,7 +30,7 @@ export const SearchBar = ({ onSearch }) => {
     <div id={style.SearchContainer}>
       <input
         className={style.SearchBar}
-        value={state}
+        value={searchTerm}
         placeholder="Search..."
         onChange={handleChange}
         onKeyDown={handleKeyDown}

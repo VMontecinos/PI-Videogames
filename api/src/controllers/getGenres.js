@@ -9,10 +9,6 @@ const getGenres = async (req, res) => {
     let id = response.map((obj) => obj.id);
     const name = response.map((obj) => obj.name).toString();
 
-    console.log(response);
-    console.log(id);
-    console.log(name);
-
     const [genre, created] = await GameGenre.findOrCreate({
       where: {
         id: id,

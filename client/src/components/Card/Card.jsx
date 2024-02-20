@@ -1,13 +1,15 @@
 import { useState } from "react";
 import style from "./Card.module.css";
 
-export const Card = ({ game, onClose }) => {
-  const descriptionRegex =
-    /<(p|br |hr |br|hr|h2|h3)\/?>|<\/(p|h2|h3)>|&quot|&#39;/gi;
-
-  const cleanDescription = game.description.replaceAll(descriptionRegex, "");
-
+export const Card = ({ game }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const auxImage =
+    "https://www.pngitem.com/pimgs/m/17-175435_console-png-free-image-console-png-transparent-png.png";
+
+  const gameGenres = game.genres.map((genre) => {
+    return genre.name;
+  });
 
   const handleHover = () => {
     setIsHovered(true);
@@ -24,7 +26,11 @@ export const Card = ({ game, onClose }) => {
       onMouseLeave={handleLeave}
     >
       <div>
-        <img src={game.background_image} alt="" className={style.card_image} />
+        <img
+          src={game.background_image ? game.background_image : auxImage}
+          alt=""
+          className={style.card_image}
+        />
       </div>
       <h2
         className={`${style.card_title} ${
@@ -36,7 +42,7 @@ export const Card = ({ game, onClose }) => {
       {isHovered && (
         <div className={style.showGameInfo}>
           <hr />
-          <div className={style.card_description}>{cleanDescription}</div>
+          <div className={style.card_description}>{gameGenres.join(", ")}</div>
           <br />
           <div className={style.card_container_buttons}>
             <button className={style.primary_button}>Buy</button>
