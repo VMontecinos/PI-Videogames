@@ -10,5 +10,8 @@
   },
   "keywords": [],
   "author": "VMontecinos",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^5.90.3"
+  }
 }
