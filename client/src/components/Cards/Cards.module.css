@@ -1,0 +1,11 @@
+#CardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 10px 10px 10px 250px;
+}
+
+.paginate {
+  width: 25px;
+  height: 25px;
+}

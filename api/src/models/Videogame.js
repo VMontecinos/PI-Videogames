@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
@@ -20,25 +21,19 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.TEXT,
       },
-      platform: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      platforms: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
-      image: {
+      background_image: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      releaseDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
+      released: {
+        type: DataTypes.STRING,
       },
       rating: {
-        type: DataTypes.DECIMAL,
-        allowNull: true,
-        validate: { min: 0, max: 5 },
+        type: DataTypes.INTEGER,
       },
     },
     { timestamps: false }

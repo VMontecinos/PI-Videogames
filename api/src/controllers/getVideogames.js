@@ -1,67 +1,60 @@
 require("dotenv").config();
-const {
-  gameService,
-  gameIdService,
-  gameNameService,
-} = require("../service/getVideogames");
+const { gameService, gameIdService } = require("../service/getVideogames");
 const { Videogame } = require("../db");
+const { Op } = require("sequelize");
 
 const getVideogames = async (req, res) => {
-  const { search } = req.query;
-
-  if (!search) {
-    try {
-      const response = await gameService();
-      return res.status(200).json(response);
-    } catch (error) {
-      res.status(404).json({ message: error.message });
-    }
-  } else {
-    if (!search || typeof search !== "string") {
-      return res.status(400).send("You must provide a valid search term!");
-    }
-
-    try {
-      const apiFind = await gameNameService(search);
-      const dbFind = await Videogame.findOne({
-        where: {
-          slug: search,
-        },
-      });
-
-      const response = { apiFind, dbFind };
-
-      return res.status(200).json(response);
-    } catch (error) {
-      res.status(404).json({ message: error.message });
-    }
-  }
-};
-
-const getGameById = async (req, res) => {
+  let { search, page } = req.query;
   const { id } = req.params;
 
-  if (!isNaN(Number(id))) {
-    try {
-      const response = await gameIdService(id);
+  const isUUID = (str) => {
+    const uuidRegex =
+      /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+    return uuidRegex.test(str);
+  };
 
-      return res.status(200).json(response);
+  if (id) {
+    if (Number(id)) {
+      const apiResponse = await gameIdService(id);
+      res.status(200).json(apiResponse);
+    } else if (isUUID(id)) {
+      try {
+        const dbResponse = await Videogame.findByPk(id);
+        const { dataValues } = dbResponse;
+        if (dbResponse) {
+          res.status(200).json(dataValues);
+        } else {
+          res.status(404).json({ message: "Game not found" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+      }
+    } else {
+      res.status(400).json({ message: "Invalid ID format" });
+    }
+  } else if (search) {
+    try {
+      const apiResponse = await gameService(search);
+      const dbResponse = await Videogame.findAll({
+        where: { name: { [Op.iLike]: `%${search}%` } },
+      });
+      if (dbResponse.length > 0) {
+        return res.status(200).json([...dbResponse, ...apiResponse]);
+      } else {
+        res.status(200).json(apiResponse);
+      }
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      console.log(error);
     }
   } else {
-    const findGame = await Videogame.findOne({
-      where: {
-        id: id,
-      },
-    });
-    if (!findGame) {
-      return res
-        .status(404)
-        .json({ message: "There are no games with this ID." });
+    try {
+      const games = await gameService((search = ""), page);
+      res.status(200).json(games);
+    } catch (err) {
+      console.log(err);
     }
-    return res.status(200).json(findGame);
   }
 };
 
-module.exports = { getVideogames, getGameById };
+module.exports = { getVideogames };

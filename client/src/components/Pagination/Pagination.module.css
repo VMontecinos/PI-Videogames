@@ -1,0 +1,42 @@
+@import url(../../styles/var.css);
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageButton {
+  background-color: #c4c2c2;
+  color: var(--text);
+  transition: all 0.3s;
+  margin: 20px 30px 20px 0;
+}
+
+.pageButton:hover {
+  color: var(--clear-text);
+  background-color: var(--primary);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.current {
+  color: var(--clear-text);
+  background-color: var(--primary);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.icons {
+  color: var(--text);
+  position: relative;
+  left: 0;
+  transition: all 0.3s;
+}
+
+.pageButton:hover .icons {
+  color: var(--clear-text);
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
