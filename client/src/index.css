@@ -1,6 +1,8 @@
 @import url(./styles/var.css);
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
+  height: 100%;
   margin: 0;
   font-family: sans-serif, serif;
   background-color: var(--background);
@@ -16,10 +18,19 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--primary);
   cursor: pointer;
   transition: border-color 0.25s;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(233, 233, 233);
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+body {
+  font-family: "Roboto Condensed";
 }
 
 code {

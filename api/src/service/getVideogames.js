@@ -1,7 +1,7 @@
 const axios = require("axios");
 const myProcess = process.env;
 
-const getVideogamesService = async (search) => {
+const getVideogamesService = async (search, page) => {
   if (search) {
     search = search.split(" ").join("-").toLowerCase();
 
@@ -10,8 +10,26 @@ const getVideogamesService = async (search) => {
         `https://api.rawg.io/api/games?key=${myProcess.API_KEY}&search=${search}`
       );
 
+      console.log(data);
+
       if (!data) {
         throw new Error("No games match that name. Please try again!");
+      }
+
+      const { results, next, previous } = data;
+
+      return results;
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    try {
+      const { data } = await axios(
+        `https://api.rawg.io/api/games?key=${myProcess.API_KEY}&page=${page}`
+      );
+
+      if (!data) {
+        throw new Error("No games were found. Please try again!");
       }
 
       const { results } = data;
@@ -20,30 +38,27 @@ const getVideogamesService = async (search) => {
     } catch (error) {
       console.log(error);
     }
-    const { data } = await axios(URL);
-
-    if (!data) {
-      throw new Error("No games were found. Please try again!");
-    }
-    const { results } = data;
-
-    return results;
   }
 };
 
 const getGameByIdService = async (id) => {
   const URL = `https://api.rawg.io/api/games/${id}?key=${myProcess.API_KEY}`;
-
   try {
-    const response = await axios.get(URL);
+    const response = await axios(URL);
     const { data } = response;
 
     if (!data.id) {
       throw new Error("No games match that ID. Please try again!");
     }
 
-    let { name, description, platforms, background_image, released, ratings } =
+    let { name, description, platforms, background_image, released, rating } =
       data;
+
+    platforms = platforms.map(({ platform }) => {
+      return platform.name;
+    });
+
+    // console.log(data);
 
     if (background_image === null) {
       background_image =
@@ -57,8 +72,10 @@ const getGameByIdService = async (id) => {
       platforms,
       background_image,
       released,
-      ratings,
+      rating,
     };
+
+    // console.log(game);
 
     return game;
   } catch (error) {

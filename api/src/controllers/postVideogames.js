@@ -1,17 +1,9 @@
 const { Videogame } = require("../db");
 
 const postVideogames = async (req, res) => {
-  const { id, name, description, platform, image, releaseDate, rating } =
+  const { name, description, platforms, background_image, released, rating } =
     req.body;
-  if (
-    !id ||
-    !name ||
-    !description ||
-    !platform ||
-    !image ||
-    !releaseDate ||
-    !rating
-  )
+  if (!name)
     return res
       .status(400)
       .json({ message: "Your game is missing information." });
@@ -21,16 +13,15 @@ const postVideogames = async (req, res) => {
   try {
     const [game, created] = await Videogame.findOrCreate({
       where: {
-        id: id,
+        name: slug,
       },
       defaults: {
-        id,
         name,
         slug,
         description,
-        platform,
-        image,
-        releaseDate,
+        platforms,
+        background_image,
+        released,
         rating,
       },
     });

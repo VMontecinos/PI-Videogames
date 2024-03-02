@@ -6,7 +6,7 @@ const getGenresRouter = require("../routes/genres");
 // Ejemplo: const authRouter = require('./auth.js');
 
 router.use("/games", getGamesRouter);
-router.use("/games", createGamesRouter);
+router.use("/create", createGamesRouter);
 router.use("/genres", getGenresRouter);
 
 // Configurar los routers

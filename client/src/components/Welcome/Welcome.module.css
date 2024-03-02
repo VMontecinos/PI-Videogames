@@ -1,0 +1,13 @@
+.welcomeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 20vh;
+  transform: translateY(20vh);
+  font-size: 2em;
+}
+
+a {
+  width: fit-content;
+  height: fit-content;
+}

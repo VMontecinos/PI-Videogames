@@ -1,0 +1,57 @@
+@import url(../../styles/var.css);
+
+.sideBarMenu {
+  z-index: 1;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  max-height: 100vh;
+  max-width: 100vh;
+  width: 17%;
+  height: 100%;
+  background-color: #f0f0f0;
+  box-shadow: 0px 2px 6px 2px rgba(199, 199, 199, 1);
+}
+
+.icons {
+  font-size: 1.5em;
+  left: 21%;
+  color: var(--primary);
+}
+
+#Link {
+  margin-top: 10%;
+  transition: all 0.3s;
+}
+
+#Link:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 2px 3px 0px rgba(116, 60, 153, 0.75);
+  border-radius: 8%;
+}
+
+#Link:active,
+#Link:focus {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.select {
+  font-size: 0.9em;
+  font-weight: 500;
+  padding: 10px;
+  margin-top: 20px;
+  width: 130px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.select:hover {
+  cursor: pointer;
+  border: 1px solid var(--primary);
+}

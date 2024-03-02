@@ -7,13 +7,19 @@ const getGenres = async (req, res) => {
     const response = await getGenreService();
 
     let id = response.map((obj) => obj.id);
-    const name = response.map((obj) => obj.name).toString();
+
+    console.log(id);
+
+    const name = response.map((obj) => obj.name);
+
+    console.log(name);
 
     const [genre, created] = await GameGenre.findOrCreate({
       where: {
         id: id,
       },
       defaults: {
+        id: id,
         name: name,
       },
     });
@@ -24,7 +30,7 @@ const getGenres = async (req, res) => {
           "A genre with this ID already exists. Please use a different ID.",
       });
     }
-    return res.status(200).json(response);
+    return res.status(200).json(genre);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

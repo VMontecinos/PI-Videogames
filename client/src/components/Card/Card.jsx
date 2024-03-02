@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import style from "./Card.module.css";
 
@@ -7,9 +8,12 @@ export const Card = ({ game }) => {
   const auxImage =
     "https://www.pngitem.com/pimgs/m/17-175435_console-png-free-image-console-png-transparent-png.png";
 
-  const gameGenres = game.genres.map((genre) => {
-    return genre.name;
-  });
+  const gameGenres =
+    game && game.genres
+      ? game.genres.map((genre) => {
+          return genre.name;
+        })
+      : "";
 
   const handleHover = () => {
     setIsHovered(true);
@@ -25,31 +29,30 @@ export const Card = ({ game }) => {
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
     >
-      <div>
-        <img
-          src={game.background_image ? game.background_image : auxImage}
-          alt=""
-          className={style.card_image}
-        />
-      </div>
-      <h2
-        className={`${style.card_title} ${
-          isHovered ? style.card_title_hover : ""
-        }`}
-      >
-        {game.name}
-      </h2>
-      {isHovered && (
-        <div className={style.showGameInfo}>
-          <hr />
-          <div className={style.card_description}>{gameGenres.join(", ")}</div>
-          <br />
-          <div className={style.card_container_buttons}>
-            <button className={style.primary_button}>Buy</button>
-            <button className={style.secondary_button}>Show</button>
-          </div>
+      <Link id={style.gameLink} to={`/detail/${game.id}`}>
+        <div className={style.cardShell}>
+          <img
+            src={game.background_image ? game.background_image : auxImage}
+            alt=""
+            className={`${style.card_image} ${
+              isHovered ? style.image_hovered : ""
+            }`}
+          />
         </div>
-      )}
+        <h2
+          className={`${style.card_title} ${
+            isHovered ? style.card_title_hover : ""
+          }`}
+        >
+          {game.name}
+        </h2>
+        <div className={style.showGameInfo}>
+          <div className={style.card_description}>
+            {game.genres && gameGenres.join(", ")}
+          </div>
+          <br />
+        </div>
+      </Link>
     </div>
   );
 };

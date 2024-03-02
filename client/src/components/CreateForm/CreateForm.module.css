@@ -1,0 +1,27 @@
+@import url(../../styles/var.css);
+
+.formWrapper {
+  font-size: 1.1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.spacing {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.spacingRight {
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  width: 200px;
+  height: 20px;
+  background-color: rgb(31, 30, 30);
+  color: var(--clear-text);
+  border-radius: 4px;
+  margin-left: 5px;
+}
