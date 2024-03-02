@@ -1,5 +1,6 @@
 export const GET_GENRES = "GET_GENRES";
 export const ADD_GAME = "ADD_GAME";
+export const ADD_ALL_GAMES = "ADD_ALL_GAMES";
 export const FILTER_GAMES = "FILTER_GAMES";
 export const SORT_GAMES = "SORT_GAMES";
 import axios from "axios";
@@ -29,6 +30,10 @@ export const addGame = (game) => {
       payload: data,
     });
   };
+};
+
+export const addAllGames = (games) => {
+  return { type: ADD_ALL_GAMES, payload: games };
 };
 
 export const filterGames = (genre) => {

@@ -1,4 +1,10 @@
-import { GET_GENRES, ADD_GAME, FILTER_GAMES, SORT_GAMES } from "./actions";
+import {
+  GET_GENRES,
+  ADD_GAME,
+  ADD_ALL_GAMES,
+  FILTER_GAMES,
+  SORT_GAMES,
+} from "./actions";
 
 const initialState = {
   allGames: [],
@@ -21,6 +27,11 @@ export const rootReducer = (
         myGames: payload,
         allGames: payload,
       };
+    case ADD_ALL_GAMES:
+      return {
+        ...state,
+        allGames: payload,
+      };
     case FILTER_GAMES:
       const gameFilter = state.allGames.filter((game) => {
         if (payload === "Any") {
@@ -36,8 +47,9 @@ export const rootReducer = (
     case SORT_GAMES:
       const gameSortByName = [...state.allGames];
       gameSortByName.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
+        const nameA = a.slug ? a.slug : ""; // Check if slug property exists
+        const nameB = b.slug ? b.slug : "";
+        console.log(nameA.localeCompare(nameB));
         return payload === "A"
           ? nameA.localeCompare(nameB)
           : nameB.localeCompare(nameA);

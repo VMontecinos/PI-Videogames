@@ -6,7 +6,7 @@ import { Detail } from "./components/Detail/Detail.jsx";
 import { SideBar } from "./components/SideBar/SideBar.jsx";
 import { CreateForm } from "./components/CreateForm/CreateForm.jsx";
 import { Pagination } from "./components/Pagination/Pagination.jsx";
-import { getGenres } from "./redux/actions.js";
+import { getGenres, addAllGames } from "./redux/actions.js";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -68,6 +68,7 @@ const App = () => {
             setLoading(false);
             setCurrentPage(1);
             setGames(allGames);
+            dispatch(addAllGames(allGames));
           }
         }
       } catch (error) {

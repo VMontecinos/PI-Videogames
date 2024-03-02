@@ -1,9 +1,12 @@
 import { Card } from "../Card/Card";
+import { useSelector } from "react-redux";
 import style from "./Cards.module.css";
 
 export const Cards = (props) => {
-  const { lastIndex, firstIndex, games } = props;
+  const { lastIndex, firstIndex } = props;
   const uniqueGameIds = new Set();
+
+  const games = useSelector((state) => state.allGames);
 
   return (
     <div>
