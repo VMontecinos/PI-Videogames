@@ -3,6 +3,7 @@ export const ADD_GAME = "ADD_GAME";
 export const ADD_ALL_GAMES = "ADD_ALL_GAMES";
 export const FILTER_GAMES = "FILTER_GAMES";
 export const SORT_GAMES = "SORT_GAMES";
+export const REMOVE_GAME = "REMOVE_GAME";
 import axios from "axios";
 
 export const getGenres = () => {
@@ -10,8 +11,6 @@ export const getGenres = () => {
 
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
-
-    console.log(data);
 
     return dispatch({
       type: GET_GENRES,
@@ -30,6 +29,10 @@ export const addGame = (game) => {
       payload: data,
     });
   };
+};
+
+export const removeGame = (game) => {
+  return { type: REMOVE_GAME, payload: game };
 };
 
 export const addAllGames = (games) => {

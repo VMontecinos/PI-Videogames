@@ -1,11 +1,20 @@
 import style from "./CreateForm.module.css";
-// import axios from "axios";
+import validation from "./errors.js";
 import { addGame } from "../../redux/actions";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const CreateForm = () => {
   const [formData, setFormData] = useState({
+    name: "",
+    background_image: "",
+    description: "",
+    platforms: "",
+    released: "",
+    rating: "",
+  });
+
+  const [errors, setErrors] = useState({
     name: "",
     background_image: "",
     description: "",
@@ -28,20 +37,32 @@ export const CreateForm = () => {
     } else {
       setFormData({ ...formData, [name]: value });
     }
+
+    setErrors(validation(formData));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData({
-      name: "",
-      background_image: "",
-      description: "",
-      platforms: "",
-      released: "",
-      rating: "",
-    });
-    console.log("Form Submitted with data:", formData);
-    return dispatch(addGame(formData));
+    if (
+      !formData.name ||
+      !formData.description ||
+      formData.platforms.length === 0 ||
+      !formData.released ||
+      !formData.rating
+    ) {
+      window.alert("Your game is missing information.");
+      return;
+    } else {
+      setFormData({
+        name: "",
+        background_image: "",
+        description: "",
+        platforms: "",
+        released: "",
+        rating: "",
+      });
+      return dispatch(addGame(formData));
+    }
   };
 
   return (
@@ -56,7 +77,9 @@ export const CreateForm = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            onFocus={handleChange}
           />
+          <p>{errors.name}</p>
         </label>
         <br />
         <label className={style.spacing}>
@@ -67,7 +90,9 @@ export const CreateForm = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
+            onFocus={handleChange}
           />
+          <p>{errors.description}</p>
         </label>
         <br />
 
@@ -90,9 +115,11 @@ export const CreateForm = () => {
                 value={platform}
                 checked={formData.platforms.includes(platform)}
                 onChange={handleChange}
+                onFocus={handleChange}
               />
             </div>
           ))}
+          <p>{errors.platforms}</p>
         </label>
         <br />
         <label className={style.spacing}>
@@ -103,7 +130,9 @@ export const CreateForm = () => {
             name="released"
             value={formData.released}
             onChange={handleChange}
+            onFocus={handleChange}
           />
+          <p>{errors.released}</p>
         </label>
         <br />
         <label className={style.spacing}>
@@ -112,6 +141,7 @@ export const CreateForm = () => {
             name="rating"
             value={formData.rating}
             onChange={handleChange}
+            onFocus={handleChange}
             className={style.spacingRight}
           >
             <option value="0">Select a rating</option>
@@ -121,6 +151,7 @@ export const CreateForm = () => {
             <option value="4">4 ⭐</option>
             <option value="5">5 ⭐</option>
           </select>
+          <p>{errors.rating}</p>
         </label>
         <br />
         <label className={style.spacing}>
@@ -131,10 +162,21 @@ export const CreateForm = () => {
             name="background_image"
             value={formData.background_image}
             onChange={handleChange}
+            onFocus={handleChange}
           />
         </label>
         <br />
-        <button type="submit" className={style.spacing}>
+        <button
+          type="submit"
+          className={`${style.spacing} ${style.button}`}
+          disabled={
+            !formData.name ||
+            !formData.description ||
+            formData.platforms.length === 0 ||
+            !formData.released ||
+            !formData.rating
+          }
+        >
           Add Game
         </button>
       </form>

@@ -1,12 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { filterGames, sortGames } from "../../redux/actions";
 import style from "./SideBar.module.css";
 
 export const SideBar = () => {
   const location = useLocation();
-
   const dispatch = useDispatch();
+
+  const genres = useSelector((state) => state.allGenres);
 
   const reloadPage = () => {
     window.location.reload();
@@ -49,7 +51,10 @@ export const SideBar = () => {
         <h2>Create</h2>
       </Link>
       <select name="filter" className={style.select} onChange={handleFilter}>
-        <option value="Any">Any</option>
+        {genres.map((genre) => (
+          <option value={genre.name}>{genre}</option>
+        ))}
+        {/* <option value="Any">Any</option>
         <option value="Action">Action</option>
         <option value="Indie">Indie</option>
         <option value="Adventure">Adventure</option>
@@ -68,7 +73,7 @@ export const SideBar = () => {
         <option value="Family">Family</option>
         <option value="Board Games">Board Games</option>
         <option value="Educational">Educational</option>
-        <option value="Card">Card Games</option>
+        <option value="Card">Card Games</option> */}
       </select>
       <select name="sort" className={style.select} onChange={handleSort}>
         <option value="A">A - Z</option>

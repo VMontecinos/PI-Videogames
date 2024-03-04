@@ -8,7 +8,10 @@ const getGenres = async (req, res) => {
 
     console.log(response);
 
-    // for (i = 0; i < response.length; i++) {}
+    let id = response.map((obj) => obj.id);
+    const name = response.map((obj) => obj.name);
+
+    console.log(name);
 
     const [genre, created] = await GameGenre.findOrCreate({
       where: {

@@ -27,8 +27,6 @@ export const Detail = () => {
   const auxImage =
     "https://www.pngitem.com/pimgs/m/17-175435_console-png-free-image-console-png-transparent-png.png";
 
-  console.log(game);
-
   const descriptionRegex =
     /<(p|br |hr |br|hr|h2|h3|strong)\/?>|<\/(p|h2|h3|strong)>|&quot;|&#39;|Español[\s\S]*$/gi;
 

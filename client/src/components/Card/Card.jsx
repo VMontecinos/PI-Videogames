@@ -6,8 +6,7 @@ export const Card = ({ game }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const auxImage =
-    "https://www.pngitem.com/pimgs/m/17-175435_console-png-free-image-console-png-transparent-png.png";
-
+    "https://i.pinimg.com/736x/95/4b/cd/954bcd8a30e8c1222d0b3095ea3e54f5.jpg";
   const gameGenres =
     game && game.genres
       ? game.genres.map((genre) => {
@@ -21,6 +20,11 @@ export const Card = ({ game }) => {
 
   const handleLeave = () => {
     setIsHovered(false);
+  };
+
+  const checkId = () => {
+    const id = game.id;
+    return isNaN(Number(id));
   };
 
   return (
@@ -52,6 +56,7 @@ export const Card = ({ game }) => {
           </div>
           <br />
         </div>
+        {checkId() ? <button className="fa-solid fa-xmark"></button> : ""}
       </Link>
     </div>
   );

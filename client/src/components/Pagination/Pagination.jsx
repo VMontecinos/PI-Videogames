@@ -39,8 +39,6 @@ export const Pagination = ({
     });
   };
 
-  console.log(currentPage);
-
   return (
     <div>
       <button

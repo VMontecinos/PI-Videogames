@@ -19,9 +19,27 @@
   display: flex;
   justify-content: flex-start;
   width: 200px;
-  height: 20px;
+  height: 25px;
   background-color: rgb(31, 30, 30);
   color: var(--clear-text);
   border-radius: 4px;
   margin-left: 5px;
+}
+
+.button {
+  background-color: var(--background);
+  color: var(--text);
+  border: 2px solid var(--primary);
+  width: 200px;
+  transition: all 0.3s;
+}
+
+.button:hover {
+  background-color: var(--primary);
+  color: var(--clear-text);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

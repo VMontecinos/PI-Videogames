@@ -4,9 +4,11 @@ import {
   ADD_ALL_GAMES,
   FILTER_GAMES,
   SORT_GAMES,
+  REMOVE_GAME,
 } from "./actions";
 
 const initialState = {
+  allGenres: [],
   allGames: [],
   myGames: [],
 };
@@ -25,6 +27,11 @@ export const rootReducer = (
       return {
         ...state,
         myGames: payload,
+        allGames: [...state.allGames, payload],
+      };
+    case REMOVE_GAME:
+      return {
+        ...state,
         allGames: payload,
       };
     case ADD_ALL_GAMES:
@@ -49,7 +56,6 @@ export const rootReducer = (
       gameSortByName.sort((a, b) => {
         const nameA = a.slug ? a.slug : ""; // Check if slug property exists
         const nameB = b.slug ? b.slug : "";
-        console.log(nameA.localeCompare(nameB));
         return payload === "A"
           ? nameA.localeCompare(nameB)
           : nameB.localeCompare(nameA);

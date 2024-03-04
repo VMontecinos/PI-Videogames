@@ -51,8 +51,8 @@ const getVideogames = async (req, res) => {
     try {
       const games = await gameService((search = ""), page);
       res.status(200).json(games);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   }
 };

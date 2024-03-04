@@ -40,6 +40,7 @@ const App = () => {
       if (data.length > 0) {
         allGames.push(...data);
         setGames(allGames);
+        dispatch(addAllGames(allGames));
       } else {
         window.alert("¡No hay juegos con ese nombre!");
       }
@@ -84,7 +85,11 @@ const App = () => {
     <div className="App">
       <Nav onSearch={onSearch} />
       <div>
-        {loading && <div className="loading"></div>}
+        {loading && location.pathname === "/home" ? (
+          <div className="loading"></div>
+        ) : (
+          ""
+        )}
         {location.pathname !== "/" && <SideBar />}
         <Routes>
           <Route path="/" element={<Welcome />}></Route>

@@ -5,7 +5,10 @@ import thunkMiddleware from "redux-thunk";
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(thunkMiddleware),
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }).concat(thunkMiddleware),
   devTools: process.env.NODE_ENV !== "production", // Enable Redux DevTools in development
 });
 

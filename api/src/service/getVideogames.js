@@ -58,11 +58,9 @@ const getGameByIdService = async (id) => {
       return platform.name;
     });
 
-    // console.log(data);
-
     if (background_image === null) {
       background_image =
-        "https://www.pngitem.com/pimgs/m/17-175435_console-png-free-image-console-png-transparent-png.png";
+        "https://i.pinimg.com/736x/95/4b/cd/954bcd8a30e8c1222d0b3095ea3e54f5.jpg";
     }
 
     const game = {
@@ -74,8 +72,6 @@ const getGameByIdService = async (id) => {
       released,
       rating,
     };
-
-    // console.log(game);
 
     return game;
   } catch (error) {
