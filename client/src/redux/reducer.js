@@ -4,19 +4,19 @@ import {
   ADD_ALL_GAMES,
   FILTER_GAMES,
   SORT_GAMES,
+  CLEAN_FILTERS,
   REMOVE_GAME,
 } from "./actions";
 
 const initialState = {
   allGenres: [],
+  initialGames: [],
   allGames: [],
   myGames: [],
 };
 
-export const rootReducer = (
-  state = initialState,
-  { type, payload } = action
-) => {
+export const rootReducer = (state = initialState, action) => {
+  const { type, payload } = action;
   switch (type) {
     case GET_GENRES:
       return {
@@ -32,19 +32,27 @@ export const rootReducer = (
     case REMOVE_GAME:
       return {
         ...state,
-        allGames: payload,
+        allGames: [...state.allGames, payload],
       };
     case ADD_ALL_GAMES:
       return {
         ...state,
         allGames: payload,
+        initialGames: payload,
       };
     case FILTER_GAMES:
-      const gameFilter = state.allGames.filter((game) => {
+      const gameFilter = state.allGames.filter((games) => {
         if (payload === "Any") {
-          return { ...state, ...state.allGames };
+          return state.allGames;
         }
-        return game.genre.includes(payload);
+
+        const gameId = games.genres.map((genre) => genre.id);
+
+        console.log(gameId);
+
+        console.log(typeof payload);
+
+        return gameId.includes(Number(payload));
       });
 
       return {
@@ -65,6 +73,12 @@ export const rootReducer = (
         ...state,
         allGames: gameSortByName,
       };
+    case CLEAN_FILTERS:
+      return {
+        ...state,
+        allGames: [...state.initialGames],
+      };
+
     default:
       return { ...state };
   }

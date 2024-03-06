@@ -18,7 +18,7 @@ export const Title = () => {
         }
       }}
     >
-      GameWare
+      🕹️ GameWare
     </Link>
   );
 };

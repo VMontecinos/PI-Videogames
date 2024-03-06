@@ -3,6 +3,7 @@ export const ADD_GAME = "ADD_GAME";
 export const ADD_ALL_GAMES = "ADD_ALL_GAMES";
 export const FILTER_GAMES = "FILTER_GAMES";
 export const SORT_GAMES = "SORT_GAMES";
+export const CLEAN_FILTERS = "CLEAN_FILTERS";
 export const REMOVE_GAME = "REMOVE_GAME";
 import axios from "axios";
 
@@ -31,8 +32,13 @@ export const addGame = (game) => {
   };
 };
 
-export const removeGame = (game) => {
-  return { type: REMOVE_GAME, payload: game };
+export const removeGame = (id) => {
+  const endpoint = `http://localhost:3001/gameware/create/${id}`;
+  return async (dispatch) => {
+    const { data } = await axios.delete(endpoint);
+
+    return dispatch({ type: REMOVE_GAME, payload: data });
+  };
 };
 
 export const addAllGames = (games) => {
@@ -45,4 +51,8 @@ export const filterGames = (genre) => {
 
 export const sortGames = (order) => {
   return { type: SORT_GAMES, payload: order };
+};
+
+export const cleanFilters = (reset) => {
+  return { type: CLEAN_FILTERS, payload: reset };
 };

@@ -55,3 +55,18 @@
   cursor: pointer;
   border: 1px solid var(--primary);
 }
+
+.cleanFilters {
+  margin-top: 15px;
+  color: var(--text);
+  width: 130px;
+  border: 2px solid var(--primary);
+  background-color: var(--background);
+  transition: all 0.3s;
+}
+
+.cleanFilters:hover {
+  color: var(--clear-text);
+  border: 2px solid #252525;
+  background-color: var(--primary);
+}

@@ -1,11 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { removeGame } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import style from "./Detail.module.css";
 
 export const Detail = () => {
   const { id } = useParams();
   const [game, setGame] = useState();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchGameById() {
@@ -35,6 +39,18 @@ export const Detail = () => {
       ? game.description.replaceAll(descriptionRegex, "")
       : "";
 
+  const checkId = () => {
+    const id = game.id;
+    return isNaN(Number(id));
+  };
+
+  const handleDelete = () => {
+    dispatch(removeGame(game.id));
+    window.alert("Game deleted successfully! 👋");
+    navigate("/home");
+    window.location.reload();
+  };
+
   return game ? (
     <div>
       <div className={style.detailContainer}>
@@ -53,6 +69,14 @@ export const Detail = () => {
           <p className={style.highlight}>Released: {game.released} 📆</p>
           <p className={style.highlight}>Rating: {game.rating} ⭐ </p>
           <p className={style.highlight}>#{game.id} 🆔</p>
+          {checkId() ? (
+            <button
+              className={`fa-solid fa-xmark ${style.deleteButton}`}
+              onClick={handleDelete}
+            ></button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

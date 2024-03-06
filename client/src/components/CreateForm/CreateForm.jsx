@@ -9,7 +9,7 @@ export const CreateForm = () => {
     name: "",
     background_image: "",
     description: "",
-    platforms: "",
+    platforms: [],
     released: "",
     rating: "",
   });
@@ -18,7 +18,7 @@ export const CreateForm = () => {
     name: "",
     background_image: "",
     description: "",
-    platforms: "",
+    platforms: [],
     released: "",
     rating: "",
   });
@@ -34,6 +34,7 @@ export const CreateForm = () => {
         : formData.platforms.filter((platform) => platform !== value);
 
       setFormData({ ...formData, platforms: updatedPlatforms });
+      console.log(formData.platforms.length);
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -43,12 +44,19 @@ export const CreateForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const trimmedFormData = {
+      ...formData,
+      name: formData.name.trim(),
+      description: formData.description.trim(),
+    };
+
     if (
-      !formData.name ||
-      !formData.description ||
-      formData.platforms.length === 0 ||
-      !formData.released ||
-      !formData.rating
+      !trimmedFormData.name ||
+      !trimmedFormData.description ||
+      trimmedFormData.platforms.length === 0 ||
+      !trimmedFormData.released ||
+      !trimmedFormData.rating
     ) {
       window.alert("Your game is missing information.");
       return;
@@ -57,11 +65,11 @@ export const CreateForm = () => {
         name: "",
         background_image: "",
         description: "",
-        platforms: "",
+        platforms: [],
         released: "",
         rating: "",
       });
-      return dispatch(addGame(formData));
+      return dispatch(addGame(trimmedFormData));
     }
   };
 
@@ -164,17 +172,19 @@ export const CreateForm = () => {
             onChange={handleChange}
             onFocus={handleChange}
           />
+          <p>{errors.background_image}</p>
         </label>
         <br />
         <button
           type="submit"
           className={`${style.spacing} ${style.button}`}
           disabled={
-            !formData.name ||
-            !formData.description ||
-            formData.platforms.length === 0 ||
-            !formData.released ||
-            !formData.rating
+            errors.name ||
+            errors.description ||
+            errors.platforms ||
+            errors.released ||
+            errors.rating ||
+            errors.background_image
           }
         >
           Add Game

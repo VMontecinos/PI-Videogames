@@ -38,4 +38,25 @@ const postVideogames = async (req, res) => {
   }
 };
 
-module.exports = { postVideogames };
+const removeVideogame = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const gameFind = await Videogame.findOne({ where: { id: id } });
+    if (!gameFind) {
+      return res.status(400).json({
+        message: "That game doesn't exist.",
+      });
+    }
+
+    await Videogame.destroy({ where: { id: id } });
+    return res.status(200).json({
+      message: "Game removed successfully.",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
+
+module.exports = { postVideogames, removeVideogame };

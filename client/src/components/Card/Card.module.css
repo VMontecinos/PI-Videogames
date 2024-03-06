@@ -29,6 +29,10 @@
   transform: scale(1.02);
   height: 420px;
   margin-bottom: 0;
+  .api,
+  .db {
+    background-color: var(--primary);
+  }
 }
 
 .card_image {
@@ -76,4 +80,16 @@ hr {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+.api,
+.db {
+  color: var(--clear-text);
+  position: absolute;
+  z-index: 2;
+  padding: 0 40px 0 40px;
+  background-color: var(--secondary);
+  bottom: 0;
+  width: 70%;
+  transition: all 0.3s;
 }

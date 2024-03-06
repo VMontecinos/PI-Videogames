@@ -7,6 +7,7 @@ export const Card = ({ game }) => {
 
   const auxImage =
     "https://i.pinimg.com/736x/95/4b/cd/954bcd8a30e8c1222d0b3095ea3e54f5.jpg";
+
   const gameGenres =
     game && game.genres
       ? game.genres.map((genre) => {
@@ -35,6 +36,11 @@ export const Card = ({ game }) => {
     >
       <Link id={style.gameLink} to={`/detail/${game.id}`}>
         <div className={style.cardShell}>
+          {checkId() ? (
+            <div className={style.db}>DB</div>
+          ) : (
+            <div className={style.api}>API</div>
+          )}
           <img
             src={game.background_image ? game.background_image : auxImage}
             alt=""
@@ -56,7 +62,6 @@ export const Card = ({ game }) => {
           </div>
           <br />
         </div>
-        {checkId() ? <button className="fa-solid fa-xmark"></button> : ""}
       </Link>
     </div>
   );

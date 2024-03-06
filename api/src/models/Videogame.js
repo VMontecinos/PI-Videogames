@@ -15,6 +15,9 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          len: [1, 20],
+        },
       },
       slug: {
         type: DataTypes.STRING,
@@ -22,18 +25,36 @@ module.exports = (sequelize) => {
       },
       description: {
         type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          len: [10, 650],
+        },
       },
       platforms: {
         type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
       },
       background_image: {
         type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isUrl: true,
+        },
       },
       released: {
         type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isDate: true,
+        },
       },
       rating: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          min: 1,
+          max: 5,
+        },
       },
     },
     { timestamps: false }

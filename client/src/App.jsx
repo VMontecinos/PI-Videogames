@@ -50,6 +50,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    dispatch(getGenres());
     async function fetchGames() {
       try {
         const response = await axios(

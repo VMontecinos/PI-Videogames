@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { filterGames, sortGames } from "../../redux/actions";
+import { filterGames, sortGames, cleanFilters } from "../../redux/actions";
 import style from "./SideBar.module.css";
 
 export const SideBar = () => {
@@ -12,6 +12,10 @@ export const SideBar = () => {
 
   const reloadPage = () => {
     window.location.reload();
+  };
+
+  const handleClean = (e) => {
+    dispatch(cleanFilters(e.target.value));
   };
 
   const handleFilter = (e) => {
@@ -51,8 +55,11 @@ export const SideBar = () => {
         <h2>Create</h2>
       </Link>
       <select name="filter" className={style.select} onChange={handleFilter}>
+        <option value="Any">Any</option>
         {genres.map((genre) => (
-          <option value={genre.name}>{genre}</option>
+          <option key={genre.id} value={genre.id}>
+            {genre.name}
+          </option>
         ))}
         {/* <option value="Any">Any</option>
         <option value="Action">Action</option>
@@ -79,6 +86,9 @@ export const SideBar = () => {
         <option value="A">A - Z</option>
         <option value="D">Z - A</option>
       </select>
+      <button onClick={handleClean} className={style.cleanFilters}>
+        Clean filters
+      </button>
     </div>
   );
 };
