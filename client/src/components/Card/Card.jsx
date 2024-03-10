@@ -8,13 +8,6 @@ export const Card = ({ game }) => {
   const auxImage =
     "https://i.pinimg.com/736x/95/4b/cd/954bcd8a30e8c1222d0b3095ea3e54f5.jpg";
 
-  const gameGenres =
-    game && game.genres
-      ? game.genres.map((genre) => {
-          return genre.name;
-        })
-      : "";
-
   const handleHover = () => {
     setIsHovered(true);
   };
@@ -58,7 +51,7 @@ export const Card = ({ game }) => {
         </h2>
         <div className={style.showGameInfo}>
           <div className={style.card_description}>
-            {game.genres && gameGenres.join(", ")}
+            {game.genres && game.genres.map((genre) => genre).join(", ")}
           </div>
           <br />
         </div>

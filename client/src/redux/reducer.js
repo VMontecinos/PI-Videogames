@@ -46,13 +46,9 @@ export const rootReducer = (state = initialState, action) => {
           return state.allGames;
         }
 
-        const gameId = games.genres.map((genre) => genre.id);
+        const gameName = games.genres.map((genre) => genre);
 
-        console.log(gameId);
-
-        console.log(typeof payload);
-
-        return gameId.includes(Number(payload));
+        return gameName.includes(payload);
       });
 
       return {

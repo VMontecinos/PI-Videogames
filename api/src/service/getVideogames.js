@@ -10,15 +10,18 @@ const getVideogamesService = async (search, page) => {
         `https://api.rawg.io/api/games?key=${myProcess.API_KEY}&search=${search}`
       );
 
-      console.log(data);
-
       if (!data) {
         throw new Error("No games match that name. Please try again!");
       }
 
-      const { results, next, previous } = data;
+      const { results } = data;
 
-      return results;
+      const updatedResults = results.map(({ genres, ...rest }) => ({
+        genres: genres.map((genre) => genre.name),
+        ...rest,
+      }));
+
+      return updatedResults;
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +37,12 @@ const getVideogamesService = async (search, page) => {
 
       const { results } = data;
 
-      return results;
+      const updatedResults = results.map(({ genres, ...rest }) => ({
+        genres: genres.map((genre) => genre.name),
+        ...rest,
+      }));
+
+      return updatedResults;
     } catch (error) {
       console.log(error);
     }
@@ -51,8 +59,15 @@ const getGameByIdService = async (id) => {
       throw new Error("No games match that ID. Please try again!");
     }
 
-    let { name, description, platforms, background_image, released, rating } =
-      data;
+    let {
+      name,
+      description,
+      platforms,
+      genres,
+      background_image,
+      released,
+      rating,
+    } = data;
 
     platforms = platforms.map(({ platform }) => {
       return platform.name;
@@ -67,6 +82,7 @@ const getGameByIdService = async (id) => {
       id,
       name,
       description,
+      genres,
       platforms,
       background_image,
       released,

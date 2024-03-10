@@ -6,6 +6,17 @@
   flex-direction: column;
 }
 
+.formBackground {
+  background-color: rgba(255, 254, 222, 0.575);
+  max-width: 50%;
+  transform: translateX(60%);
+}
+
+.textBox {
+  height: 40%;
+  background-color: wheat;
+}
+
 .spacing {
   display: inline-flex;
   flex-direction: column;
@@ -18,10 +29,12 @@
   border: none;
   display: flex;
   justify-content: flex-start;
-  width: 200px;
-  height: 25px;
-  background-color: rgb(31, 30, 30);
-  color: var(--clear-text);
+  font-size: large;
+  width: 250px;
+  height: 35px;
+  background-color: #e4d3a9;
+  border: 2px solid #c9b78a;
+  color: var(--text);
   border-radius: 4px;
   margin-left: 5px;
 }
@@ -30,8 +43,9 @@
   background-color: var(--background);
   color: var(--text);
   border: 2px solid var(--primary);
-  width: 200px;
+  width: 250px;
   transition: all 0.3s;
+  margin-bottom: 50px;
 }
 
 .button:hover {
@@ -42,4 +56,10 @@
 .button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.checkbox {
+  display: flex;
+  flex-wrap: wrap;
+  height: 450px;
 }

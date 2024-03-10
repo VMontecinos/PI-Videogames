@@ -1,8 +1,15 @@
 const { Videogame } = require("../db");
 
 const postVideogames = async (req, res) => {
-  const { name, description, platforms, background_image, released, rating } =
-    req.body;
+  let {
+    name,
+    description,
+    platforms,
+    genres,
+    background_image,
+    released,
+    rating,
+  } = req.body;
   if (!name)
     return res
       .status(400)
@@ -20,6 +27,7 @@ const postVideogames = async (req, res) => {
         slug,
         description,
         platforms,
+        genres,
         background_image,
         released,
         rating,

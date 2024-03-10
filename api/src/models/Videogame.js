@@ -48,6 +48,10 @@ module.exports = (sequelize) => {
           isDate: true,
         },
       },
+      genres: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false,
+      },
       rating: {
         type: DataTypes.INTEGER,
         allowNull: false,

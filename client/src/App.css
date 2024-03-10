@@ -14,7 +14,7 @@
   animation: 1.5s linear infinite spinner;
   animation-play-state: inherit;
   border: solid 5px #cfd0d1;
-  border-bottom-color: var(--primary);
+  border-bottom-color: var(--text-shade);
   border-radius: 50%;
   content: "";
   height: 40px;

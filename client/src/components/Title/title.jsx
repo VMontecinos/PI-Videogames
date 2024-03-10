@@ -18,7 +18,8 @@ export const Title = () => {
         }
       }}
     >
-      🕹️ GameWare
+      <i className={`fa-solid fa-mug-hot ${style.icon}`}></i>
+      GameWare
     </Link>
   );
 };

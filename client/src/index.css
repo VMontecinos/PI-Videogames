@@ -4,8 +4,13 @@
 body {
   height: 100%;
   margin: 0;
-  font-family: sans-serif, serif;
+  font-family: "Roboto Condensed";
   background-color: var(--background);
+  background-image: url(./images/background-home.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -27,10 +32,6 @@ button {
 a {
   color: var(--text);
   text-decoration: none;
-}
-
-body {
-  font-family: "Roboto Condensed";
 }
 
 code {
