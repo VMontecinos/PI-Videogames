@@ -24,8 +24,12 @@ export default (form) => {
     errors.description = "That description is too long.";
   }
 
-  if (form.platforms.length < 1) {
+  if (form.platforms.length === 0) {
     errors.platforms = "Game must have at least one platform.";
+  }
+
+  if (form.genres.length === 0) {
+    errors.genres = "Game must have at least one genre.";
   }
 
   if (!form.released) {

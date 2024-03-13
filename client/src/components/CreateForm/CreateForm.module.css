@@ -60,6 +60,12 @@
 
 .checkbox {
   display: flex;
+  align-content: center;
   flex-wrap: wrap;
   height: 450px;
+  left: 0;
+}
+
+.checkbox > p {
+  transform: translate(-250px, 50px);
 }

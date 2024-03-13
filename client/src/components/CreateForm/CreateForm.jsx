@@ -21,39 +21,55 @@ export const CreateForm = () => {
     description: "",
     platforms: [],
     genres: [],
-
     released: "",
     rating: "",
   });
 
+  const [focusedInput, setFocusedInput] = useState(null);
+
   const genres = useSelector((state) => state.allGenres);
 
   const dispatch = useDispatch();
+
+  const handlePlatformChange = (value, checked) => {
+    const updatedPlatforms = checked
+      ? [...formData.platforms, value]
+      : formData.platforms.filter((platform) => platform !== value);
+
+    setFormData({ ...formData, platforms: updatedPlatforms });
+    setErrors(validation({ ...formData, platforms: updatedPlatforms }));
+  };
+
+  const handleGenreChange = (value, checked) => {
+    const updatedGenres = checked
+      ? [...formData.genres, value]
+      : formData.genres.filter((genre) => genre !== value);
+
+    setFormData({ ...formData, genres: updatedGenres });
+    setErrors(validation({ ...formData, genres: updatedGenres }));
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     if (type === "checkbox") {
       if (name === "platform") {
-        const updatedPlatforms = checked
-          ? [...formData.platforms, value]
-          : formData.platforms.filter((platform) => platform !== value);
-
-        setFormData({ ...formData, platforms: updatedPlatforms });
+        handlePlatformChange(value, checked);
       } else if (name === "genre") {
-        const updatedGenres = checked
-          ? [...formData.genres, value]
-          : formData.genres.filter((genre) => genre !== value);
-
-        setFormData({ ...formData, genres: updatedGenres });
-      } else {
-        setFormData({ ...formData, [name]: value });
+        handleGenreChange(value, checked);
       }
     } else {
       setFormData({ ...formData, [name]: value });
+      setErrors(validation({ ...formData, [name]: value }));
     }
+  };
 
-    setErrors(validation(formData));
+  const handleFocus = (e) => {
+    setFocusedInput(e.target.name);
+  };
+
+  const handleBlur = () => {
+    setFocusedInput(null);
   };
 
   const handleSubmit = (e) => {
@@ -102,8 +118,10 @@ export const CreateForm = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
-            <p>{errors.name}</p>
+            <p>{focusedInput === "name" && errors.name}</p>
           </label>
           <br />
           <label className={style.spacing}>
@@ -114,8 +132,10 @@ export const CreateForm = () => {
               name="description"
               value={formData.description}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
-            <p>{errors.description}</p>
+            <p>{focusedInput === "description" && errors.description}</p>
           </label>
           <br />
 
@@ -138,10 +158,16 @@ export const CreateForm = () => {
                   value={platform}
                   checked={formData.platforms.includes(platform)}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
                 />
               </div>
             ))}
-            <p>{errors.platforms}</p>
+            <p>
+              {focusedInput && formData.platforms.length < 1
+                ? errors.platforms
+                : ""}
+            </p>
           </label>
           <br />
           <label className={style.spacing}>
@@ -152,8 +178,14 @@ export const CreateForm = () => {
               name="released"
               value={formData.released}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
-            <p>{errors.released}</p>
+            <p>
+              {focusedInput === "released" && !formData.released
+                ? errors.released
+                : ""}
+            </p>
           </label>
           <br />
           <label className={`${style.spacing}  ${style.checkbox}`}>
@@ -168,9 +200,19 @@ export const CreateForm = () => {
                   value={genre.name}
                   checked={formData.genres.includes(genre.name)}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
                 />
               </div>
             ))}
+            <br />
+            <p>
+              {focusedInput &&
+              focusedInput.includes("genre") &&
+              formData.genres.length < 1
+                ? errors.genres
+                : ""}
+            </p>
           </label>
           <br />
           <label className={style.spacing}>
@@ -179,6 +221,8 @@ export const CreateForm = () => {
               name="rating"
               value={formData.rating}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               className={style.spacingRight}
             >
               <option value="0">Select a rating</option>
@@ -188,7 +232,7 @@ export const CreateForm = () => {
               <option value="4">4 ⭐</option>
               <option value="5">5 ⭐</option>
             </select>
-            <p>{errors.rating}</p>
+            <p>{focusedInput === "rating" && errors.rating}</p>
           </label>
           <br />
           <label className={style.spacing}>
@@ -199,8 +243,12 @@ export const CreateForm = () => {
               name="background_image"
               value={formData.background_image}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             />
-            <p>{errors.background_image}</p>
+            <p>
+              {focusedInput === "background_image" && errors.background_image}
+            </p>
           </label>
           <br />
           <button
